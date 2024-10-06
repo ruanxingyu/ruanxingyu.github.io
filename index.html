@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -364,6 +365,18 @@
             const encouragementSpan = document.querySelector('.encouragement');
             const randomIndex = Math.floor(Math.random() * encouragements.length);
             encouragementSpan.textContent = encouragements[randomIndex];
+        }
+   
+        function detectDevice() {
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                // 移动设备调整
+                const card = document.querySelector('.card');
+                card.style.width = '95%'; // 移动设备上宽度改为95%
+                card.style.maxWidth = 'none'; // 取消最大宽度限制
+            } else {
+                // 桌面设备调整
+                // 这里可以放置针对桌面设备的样式调整代码
+            }
         }
     </script>
 </body>
