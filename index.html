@@ -1,39 +1,371 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的主页</title>
-    <!-- 添加CSS链接 -->
-    <link rel="stylesheet" href="styles.css">
+    <title>每日一题</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto Serif SC:wght@400;700&family=Noto Sans SC:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 清新自然系：使用绿色调 */
+            --primary-color: #4CAF50; /* 鲜绿，用于背景文字 */
+            --secondary-color: #C8E6C9; /* 淡绿，用于标题背景 */
+            --accent-color: #8BC34A; /* 草绿，用于强调元素 */
+            --background-color: #E8F7E4; /* 浅绿，用于页面背景 */
+            --text-color: #333; /* 深灰色，用于主要文字 */
+            --light-text-color: #555; /* 中灰色，用于次要文字 */
+            --divider-color: #B7DFB7; /* 浅绿，用于分隔线 */
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--background-color); /* 使用浅绿作为页面背景 */
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text-color); /* 使用深灰色作为主要文字颜色 */
+        }
+        .card {
+            width: 900px;
+            height: auto;
+            background-color: #FFFFFF; /* 白色，用于卡片背景 */
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background-color: var(--secondary-color); /* 使用淡绿作为标题背景 */
+            color: #333; /* 深色文字与浅色背景形成对比 */
+            padding: 20px;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 40px; /* 固定字体大小为40px */
+            margin: 0;
+            font-weight: 700;
+        }
+        .subtitle {
+            font-size: 30px;
+            font-weight: 400;
+            margin: 0;
+        }
+        .content {
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .problem {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .problem-main {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 25px; /* 固定字体大小为25px */
+            color: var(--text-color); /* 使用深灰色作为主要文字颜色 */
+            margin-bottom: 10px;
+        }
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: var(--divider-color); /* 使用浅绿作为分隔线 */
+            margin: 20px 0;
+        }
+        .date {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        .encouragement {
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: left; /* 文字左对齐 */
+        }
+        .background-text {
+            position: absolute;
+            font-size: 150px;
+            color: rgba(76, 175, 80, 0.15); /* 使用鲜绿的透明版本作为背景文字 */
+            z-index: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-    <header>
-        <h1>欢迎来到我的网站</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">关于我们</a></li>
-                <li><a href="#services">我们的服务</a></li>
-                <li><a href="#contact">联系我们</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="about">
-            <h2>关于我们</h2>
-            <p>这里是关于我们的信息。</p>
-        </section>
-        <section id="services">
-            <h2>我们的服务</h2>
-            <p>我们提供的服务列表。</p>
-        </section>
-        <section id="contact">
-            <h2>联系我们</h2>
-            <p>联系方式和地址。</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 我的网站. 版权所有.</p>
-    </footer>
+    <div class="card">
+        <div class="header">
+            <h1>每日一题</h1>
+            <span class="subtitle">阮老师陪你一起每天进步</span>
+        </div>
+        <div class="content">
+            <div class="problem">
+                <div class="problem-main">有一斜面，高度为 H，斜面长度为L，现用恒为 F 的力将一质量为 m 的物体从斜面下端推至顶端，求此过程中斜面对物体的摩擦力大小。（用字母表示）</div>
+            </div>
+            <div class="divider"></div>
+            <div class="date">
+                <span class="encouragement"></span>
+                <span id="currentDate"></span>
+            </div>
+        </div>
+        <div class="background-text">Physics</div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            changeTheme(getRandomTheme());
+            updateCurrentDate();
+            setEncouragementMessage();
+        });
+        
+        function getRandomTheme() {
+            const themes = ['pastel', 'gemstone', 'natural', 'grayscale', 'retro', 'vivid', 'minimalist', 'marine', 'autumn', 'morandi'];
+            return themes[Math.floor(Math.random() * themes.length)];
+        }
+        
+        function changeTheme(theme) {
+            const root = document.documentElement;
+        
+            // 设置主题
+            root.className = theme;
+        
+            // 设置 :root 的颜色变量
+            switch (theme) {
+                case 'pastel':
+                    root.style.setProperty('--primary-color', '#FFC0CB'); // 淡粉红
+                    root.style.setProperty('--secondary-color', '#F0F8FF'); // 淡蓝
+                    root.style.setProperty('--accent-color', '#FFDAB9'); // 橙色
+                    root.style.setProperty('--background-color', '#FFF8DC'); // 米色
+                    root.style.setProperty('--text-color', '#000'); // 黑色
+                    root.style.setProperty('--light-text-color', '#000'); // 黑色
+                    root.style.setProperty('--divider-color', '#F0FFFF'); // 淡蓝
+                    document.querySelector('.background-text').style.color = 'rgba(255, 192, 203, 0.15)';
+                    break;
+                case 'gemstone':
+                    root.style.setProperty('--primary-color', '#4B0082'); // 深蓝
+                    root.style.setProperty('--secondary-color', '#8A2BE2'); // 紫色
+                    root.style.setProperty('--accent-color', '#FF00FF'); // 深粉红
+                    root.style.setProperty('--background-color', '#DA70D6'); // 深蓝
+                    root.style.setProperty('--text-color', '#555'); // 中灰色
+                    root.style.setProperty('--light-text-color', '#555'); // 中灰色
+                    root.style.setProperty('--divider-color', '#0000CD'); // 深蓝
+                    document.querySelector('.background-text').style.color = 'rgba(75, 0, 130, 0.15)';
+                    break;
+                case 'natural':
+                    root.style.setProperty('--primary-color', '#4CAF50'); // 鲜绿
+                    root.style.setProperty('--secondary-color', '#C8E6C9'); // 淡绿
+                    root.style.setProperty('--accent-color', '#8BC34A'); // 草绿
+                    root.style.setProperty('--background-color', '#E8F7E4'); // 浅绿
+                    root.style.setProperty('--text-color', '#333'); // 深灰色
+                    root.style.setProperty('--light-text-color', '#555'); // 中灰色
+                    root.style.setProperty('--divider-color', '#B7DFB7'); // 浅绿
+                    document.querySelector('.background-text').style.color = 'rgba(76, 175, 80, 0.15)';
+                    break;
+                case 'grayscale':
+                    root.style.setProperty('--primary-color', '#D3D3D3'); // 灰
+                    root.style.setProperty('--secondary-color', '#808080'); // 深灰
+                    root.style.setProperty('--accent-color', '#A9A9A9'); // 中灰
+                    root.style.setProperty('--background-color', '#F5F5F5'); // 浅灰
+                    root.style.setProperty('--text-color', '#000'); // 黑色
+                    root.style.setProperty('--light-text-color', '#000'); // 黑色
+                    root.style.setProperty('--divider-color', '#DCDCDC'); // 浅灰
+                    document.querySelector('.background-text').style.color = 'rgba(211, 211, 211, 0.15)';
+                    break;
+                case 'retro':
+                    root.style.setProperty('--primary-color', '#FF4500'); // 橙红
+                    root.style.setProperty('--secondary-color', '#FFD700'); // 金黄
+                    root.style.setProperty('--accent-color', '#8B0000'); // 深红
+                    root.style.setProperty('--background-color', '#FFA07A'); // 橙黄
+                    root.style.setProperty('--text-color', '#000'); // 黑色
+                    root.style.setProperty('--light-text-color', '#000'); // 黑色
+                    root.style.setProperty('--divider-color', '#FFA500'); // 橙色
+                    document.querySelector('.background-text').style.color = 'rgba(255, 69, 0, 0.15)';
+                    break;
+                case 'vivid':
+                    root.style.setProperty('--primary-color', '#FF69B4'); // 热情粉
+                    root.style.setProperty('--secondary-color', '#FF1493'); // 深粉
+                    root.style.setProperty('--accent-color', '#FF00FF'); // 深粉
+                    root.style.setProperty('--background-color', '#FAEBD7'); // 淡黄
+                    root.style.setProperty('--text-color', '#000'); // 黑色
+                    root.style.setProperty('--light-text-color', '#000'); // 黑色
+                    root.style.setProperty('--divider-color', '#FFD700'); // 金黄
+                    document.querySelector('.background-text').style.color = 'rgba(255, 105, 180, 0.15)';
+                    break;
+                case 'minimalist':
+                    root.style.setProperty('--primary-color', '#333'); // 深灰
+                    root.style.setProperty('--secondary-color', '#F7F7F7'); // 深灰
+                    root.style.setProperty('--accent-color', '#555'); // 中灰
+                    root.style.setProperty('--background-color', '#F7F7F7'); // 浅灰
+                    root.style.setProperty('--text-color', '#333'); // 深灰
+                    root.style.setProperty('--light-text-color', '#555'); // 中灰
+                    root.style.setProperty('--divider-color', '#E0E0E0'); // 浅灰
+                    document.querySelector('.background-text').style.color = 'rgba(51, 51, 51, 0.15)';
+                    break;
+                case 'marine':
+                    root.style.setProperty('--primary-color', '#00BFFF'); // 淡蓝
+                    root.style.setProperty('--secondary-color', '#ADD8E6'); // 淡蓝
+                    root.style.setProperty('--accent-color', '#1E90FF'); // 深蓝
+                    root.style.setProperty('--background-color', '#AFEEEE'); // 淡青
+                    root.style.setProperty('--text-color', '#000'); // 黑色
+                    root.style.setProperty('--light-text-color', '#000'); // 黑色
+                    root.style.setProperty('--divider-color', '#87CEFA'); // 天蓝
+                    document.querySelector('.background-text').style.color = 'rgba(0, 191, 255, 0.15)';
+                    break;
+                case 'autumn':
+                    root.style.setProperty('--primary-color', '#FFA07A'); // 橙黄
+                    root.style.setProperty('--secondary-color', '#FF4500'); // 橙红
+                    root.style.setProperty('--accent-color', '#FF8C00'); // 橙色
+                    root.style.setProperty('--background-color', '#FFE4B5'); // 淡橙
+                    root.style.setProperty('--text-color', '#000'); // 黑色
+                    root.style.setProperty('--light-text-color', '#000'); // 黑色
+                    root.style.setProperty('--divider-color', '#FFD700'); // 金黄
+                    document.querySelector('.background-text').style.color = 'rgba(255, 165, 0, 0.15)';
+                    break;
+                case 'morandi':
+                    root.style.setProperty('--primary-color', '#98FB98'); // 浅绿
+                    root.style.setProperty('--secondary-color', '#F0E68C'); // 浅黄
+                    root.style.setProperty('--accent-color', '#FFD700'); // 金黄
+                    root.style.setProperty('--background-color', '#FAF0E6'); // 淡黄
+                    root.style.setProperty('--text-color', '#000'); // 黑色
+                    root.style.setProperty('--light-text-color', '#000'); // 黑色
+                    root.style.setProperty('--divider-color', '#F0E68C'); // 浅黄
+                    document.querySelector('.background-text').style.color = 'rgba(152, 251, 152, 0.15)';
+                    break;
+            }
+        }
+        
+        function updateCurrentDate() {
+            const currentDate = new Date();
+            const dateString = currentDate.toLocaleDateString(); // 获取本地化日期字符串
+            document.getElementById('currentDate').textContent = dateString;
+        }
+        
+        function setEncouragementMessage() {
+            const encouragements = [
+                "你有无限的潜力等待发掘",
+        "每天都是一个新的开始，抓住今天的机会",
+        "勇敢地迈出第一步，未来就在脚下",
+        "你的梦想比你想象的要近得多",
+        "挑战只是成长道路上的小石子",
+        "不要让恐惧阻碍你的成功之路",
+        "你有能力创造自己的奇迹",
+        "相信自己的直觉，它通常是对的",
+        "今天的努力造就明天的成功",
+        "坚持不懈，直到梦想成真",
+        "成功来自不断的努力和学习",
+        "你比你想象中的更强大",
+        "每一次失败都是成功的垫脚石",
+        "勇敢地面对挑战，你就能战胜它们",
+        "不要害怕改变，它能带来新的机遇",
+        "坚持自己的道路，不管别人怎么说",
+        "你已经走了这么远，继续前进吧",
+        "每一天都是展现自己价值的机会",
+        "用行动证明自己的能力",
+        "每一步都是向成功迈进的一步",
+        "保持积极的心态，一切皆有可能",
+        "每一次尝试都是一次进步",
+        "不要让过去的错误定义你的未来",
+        "每个人都有自己的节奏，跟上自己的步伐",
+        "你已经做了很多，再多做一点也不会太难",
+        "将挑战视为成长的机会",
+        "你的努力总有一天会得到回报",
+        "今天是你改变未来的起点",
+        "无论遇到多大的困难，都不要放弃",
+        "成功需要时间和耐心",
+        "每一次跌倒都是站起来变得更强大的机会",
+        "勇敢地追求你想要的生活",
+        "每个人都有独特的才能，发现并利用它",
+        "不断学习，不断进步",
+        "每一天都值得你全力以赴",
+        "坚持不懈，直到最后一刻",
+        "不要害怕犯错，它们是通往成功的必经之路",
+        "每个新的一天都是一个新的机会",
+        "你的努力永远不会白费",
+        "保持专注，你就会成功",
+        "你的坚持会带来丰硕的成果",
+        "每一次挑战都让你更接近目标",
+        "不断挑战自我，不断超越",
+        "每一个微小的进步都是巨大的成就",
+        "你的潜力无穷无尽",
+        "勇敢地走出舒适区，迎接新的挑战",
+        "坚信自己，你就是自己的英雄",
+        "你的未来充满无限可能",
+        "每一天都是为了更好的明天而努力",
+        "坚持自己的梦想，不要让任何人告诉你不可能",
+        "每一次失败都是向成功迈进的一步",
+        "你的坚持会换来最终的胜利",
+        "不断地挑战自己，不断地成长",
+        "每一次努力都离成功更近一步",
+        "你所付出的一切都会有回报",
+        "每一天都是展现自己实力的机会",
+        "不要让任何事情阻止你前进的步伐",
+        "每一个小小的进步都值得庆祝",
+        "每一次努力都是为了更美好的明天",
+        "勇敢地面对每一个挑战",
+        "你的坚持会给你带来惊喜",
+        "每一天都充满了新的可能性",
+        "坚持不懈，直到梦想成真",
+        "你的努力一定会开花结果",
+        "每一个挑战都是一个成长的机会",
+        "每一次挫折都是成功的前奏",
+        "你的坚持会让你走得更远",
+        "勇敢地追逐自己的梦想",
+        "每一天都是一个新的起点",
+        "你的努力不会白费",
+        "每一步都是成功的积累",
+        "你的每一步都值得肯定",
+        "每一天都值得你去奋斗",
+        "坚持不懈，直到成功为止",
+        "每一次努力都是成功的基石",
+        "你的坚持会为你赢得尊重",
+        "不断挑战自我，不断超越极限",
+        "每一天都是向成功迈进的一步",
+        "你的努力会让梦想成真",
+        "勇敢地追求你的梦想",
+        "每一次挑战都是成长的机会",
+        "每一次失败都是成功的垫脚石",
+        "你的坚持会让你走得更远",
+        "勇敢地面对每一个挑战",
+        "每一次努力都是成功的积累",
+        "每一天都是一个新的开始",
+        "你的努力总会得到回报",
+        "坚持不懈，直到成功为止",
+        "每一次进步都值得庆祝",
+        "你的每一步都值得赞扬",
+        "每一天都值得你去珍惜",
+        "坚持不懈，直到梦想实现",
+        "你的努力会让你更接近成功",
+        "勇敢地追逐自己的梦想",
+        "每一次挑战都是成长的契机",
+        "每一次失败都是成功的前奏",
+        "你的坚持会让你更加强大",
+        "每一天都是一个新的机会",
+        "你的努力不会白费",
+        "坚持不懈，直到最后的胜利"
+              
+            ];
+            const encouragementSpan = document.querySelector('.encouragement');
+            const randomIndex = Math.floor(Math.random() * encouragements.length);
+            encouragementSpan.textContent = encouragements[randomIndex];
+        }
+    </script>
 </body>
+
 </html>
