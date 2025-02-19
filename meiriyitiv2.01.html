@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh" data-theme="natural">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="每日物理练习题 - 阮老师科学课堂">
+    <title>每日一题 | 物理专题</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Noto+Sans+SC:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #C8E6C9;
+            --accent-color: #8BC34A;
+            --background-color: #E8F7E4;
+            --text-color: #333;
+            --light-text-color: #555;
+            --divider-color: #B7DFB7;
+            --card-width: min(90vw, 900px);
+            --shadow-intensity: 0.1;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background-color: var(--background-color);
+            font-family: 'Noto Sans SC', system-ui, sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        
+        .card {
+            width: var(--card-width);
+            background: white;
+            border-radius: 1.25rem;
+            box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,calc(var(--shadow-intensity) * 0.4));
+            animation: fadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+            margin: 20px;
+        }
+        
+        .card-header {
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        h1 {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 2.5rem;
+            margin: 0;
+            color: var(--text-color);
+            line-height: 1.2;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text-color);
+            opacity: 0.9;
+            position: relative;
+            padding-left: 1.2rem;
+            font-family: 'Noto Sans SC', system-ui, sans-serif;
+            margin: 0;
+        }
+        
+        .subtitle::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 3px;
+            background: var(--accent-color);
+        }
+        
+        .card-content {
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .problem-statement {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--divider-color);
+            margin: 2rem 0;
+        }
+        
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--light-text-color);
+        }
+        
+        .theme-background {
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.08;
+            font-weight: 900;
+            pointer-events: none;
+            z-index: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            letter-spacing: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                padding-left: 1rem;
+            }
+            
+            .problem-statement {
+                font-size: 1.2rem;
+            }
+        
+            .theme-background {
+                font-size: 8rem;
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            .card {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <article class="card">
+        <header class="card-header">
+            <h1>每日一题</h1>
+            <p class="subtitle">阮老师陪你一起每天进步</p>
+        </header>
+
+        <main class="card-content">
+            <p class="problem-statement">
+                有一斜面，高度为 H，斜面长度为 L，现用恒为 F 的力将一质量为 m 的物体从斜面下端推至顶端，求此过程中斜面对物体的摩擦力大小。（用字母表示）
+            </p>
+
+            <div class="divider" role="separator"></div>
+
+            <footer class="meta-info">
+                <span class="encouragement"></span>
+                <time id="currentDate"></time>
+            </footer>
+
+            <div class="theme-background" aria-hidden="true">Physics</div>
+        </main>
+    </article>
+
+    <script>
+        // 12种专业配色主题
+        const themes = {
+            natural: {
+                primary: '#4CAF50',
+                secondary: '#C8E6C9',
+                accent: '#8BC34A',
+                background: '#E8F7E4',
+                text: '#333',
+                lightText: '#555',
+                divider: '#B7DFB7'
+            },
+            marine: {
+                primary: '#2196F3',
+                secondary: '#BBDEFB',
+                accent: '#1976D2',
+                background: '#E3F2FD',
+                text: '#0D47A1',
+                lightText: '#1A237E',
+                divider: '#90CAF9'
+            },
+            sunset: {
+                primary: '#FF6B6B',
+                secondary: '#FFD3B6',
+                accent: '#FF8E53',
+                background: '#FFF3E0',
+                text: '#BF360C',
+                lightText: '#D84315',
+                divider: '#FFAB91'
+            },
+            galaxy: {
+                primary: '#6A1B9A',
+                secondary: '#D1C4E9',
+                accent: '#4527A0',
+                background: '#EDE7F6',
+                text: '#4A148C',
+                lightText: '#6A1B9A',
+                divider: '#B39DDB'
+            },
+            coral: {
+                primary: '#FF5252',
+                secondary: '#FFCDD2',
+                accent: '#FF1744',
+                background: '#FFEBEE',
+                text: '#B71C1C',
+                lightText: '#C62828',
+                divider: '#EF9A9A'
+            },
+            forest: {
+                primary: '#2E7D32',
+                secondary: '#C8E6C9',
+                accent: '#1B5E20',
+                background: '#E8F5E9',
+                text: '#1B5E20',
+                lightText: '#2E7D32',
+                divider: '#A5D6A7'
+            },
+            amber: {
+                primary: '#FFA000',
+                secondary: '#FFECB3',
+                accent: '#FF6F00',
+                background: '#FFF8E1',
+                text: '#E65100',
+                lightText: '#EF6C00',
+                divider: '#FFD54F'
+            },
+            slate: {
+                primary: '#607D8B',
+                secondary: '#CFD8DC',
+                accent: '#455A64',
+                background: '#ECEFF1',
+                text: '#263238',
+                lightText: '#37474F',
+                divider: '#B0BEC5'
+            },
+            sakura: {
+                primary: '#F06292',
+                secondary: '#F8BBD0',
+                accent: '#EC407A',
+                background: '#FCE4EC',
+                text: '#C2185B',
+                lightText: '#D81B60',
+                divider: '#F48FB1'
+            },
+            lagoon: {
+                primary: '#00BCD4',
+                secondary: '#B2EBF2',
+                accent: '#00838F',
+                background: '#E0F7FA',
+                text: '#006064',
+                lightText: '#00838F',
+                divider: '#80DEEA'
+            },
+            espresso: {
+                primary: '#795548',
+                secondary: '#D7CCC8',
+                accent: '#4E342E',
+                background: '#EFEBE9',
+                text: '#3E2723',
+                lightText: '#4E342E',
+                divider: '#A1887F'
+            },
+            aurora: {
+                primary: '#7C4DFF',
+                secondary: '#D1C4E9',
+                accent: '#651FFF',
+                background: '#EDE7F6',
+                text: '#311B92',
+                lightText: '#4527A0',
+                divider: '#B39DDB'
+            }
+        };
+        
+        // 物理鼓励语库（52条）
+        const ENCOURAGEMENT_LIB = [
+            "能量守恒定律告诉我们：你的努力永远不会白费",
+            "就像牛顿第一定律，持续的学习会保持进步状态",
+            "每一个解题过程都是思维的自由体受力分析",
+            "今天的努力是明天动能的积累",
+            "物理世界没有摩擦力，但成长需要克服阻力",
+            "像光子一样保持前进，不被困难衍射", 
+            "如同楞次定律：克服阻力的过程就是在积蓄能量",
+            "电场强度决定电势差，日积月累终见成效",
+            "麦克斯韦方程组揭示：变化的努力产生磁场般的吸引力",
+            "像超导体一样，突破临界点就会产生质的飞跃",
+            "熵增原理提醒：持续输入能量才能维持有序状态",
+            "热力学第二定律说：局部的努力可以创造有序奇迹",
+            "布朗运动证明：微小积累终将显现宏观效果",
+            "相对论告诉我们：速度越快时间效能越高",
+            "薛定谔方程预示：概率云终将坍缩为确定成功",
+            "量子隧穿效应：看似不可能的障碍也能穿越",
+            "开普勒定律说：找到正确轨道效率将成倍提升",
+            "引力弹弓效应：借力困难可以实现加速突破",
+            "中子星密度启示：把努力压缩在正确方向",
+            "迈克尔逊干涉：微小变化也能产生显著效应",
+            "伽利略斜面实验：匀速前进也能抵达终点",
+            "解题就像拼图，每一块都有它的位置",
+            "错误是发现新规律的契机",
+            "每个公式都是宇宙写给人类的情书",
+            "今天的练习是明天的直觉反应",
+            "物理思维是穿越迷雾的偏振片",
+            "保持你的好奇心，那是探索的原动力",
+            "复杂问题分解后都是简单步骤的组合",
+            "思维导图是构建知识体系的脚手架",
+            "每个假设都是通向真理的阶梯",
+            "实验数据不会说谎，你的努力也是",
+            "误差分析教会我们：进步需要迭代",
+            "矢量思维：方向比大小更重要",
+            "傅里叶变换：复杂问题可以分解处理",
+            "混沌理论：微小改变终将成就巨大差异",
+            "波函数坍缩：观察决定现实，专注塑造未来",
+            "测不准原理：兼容并蓄不同维度的成长",
+            "哈密顿量：优化你的能量分配",
+            "拉格朗日方程：找到最优雅的解决路径",
+            "熵减过程：建立你的知识有序体系",
+            "杨氏模量：培养抗压能力",
+            "塞曼效应：在压力下展现独特光谱",
+            "霍尔效应：在交叉领域找到自己的电势",
+            "光电效应：突破临界频率才能激发潜能",
+            "康普顿散射：每次碰撞都是进步的机会",
+            "斯特藩定律：辐射强度与温度的四次方成正比",
+            "瑞利判据：提高分辨能力才能看清本质",
+            "马吕斯定律：用正确角度看待问题",
+            "泊松亮斑：困难中也能发现意外之美"
+        ];
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            applyRandomTheme();
+            updateDateTime();
+            showDailyEncouragement();
+        });
+        
+        function applyRandomTheme() {
+            const themeNames = Object.keys(themes);
+            const randomTheme = themeNames[Math.floor(Math.random() * themeNames.length)];
+            applyTheme(randomTheme);
+        }
+        
+        function applyTheme(themeName) {
+            const theme = themes[themeName];
+            const root = document.documentElement;
+            
+            root.style.setProperty('--primary-color', theme.primary);
+            root.style.setProperty('--secondary-color', theme.secondary);
+            root.style.setProperty('--accent-color', theme.accent);
+            root.style.setProperty('--background-color', theme.background);
+            root.style.setProperty('--text-color', theme.text);
+            root.style.setProperty('--light-text-color', theme.lightText);
+            root.style.setProperty('--divider-color', theme.divider);
+            root.dataset.theme = themeName;
+        }
+        
+        function updateDateTime() {
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                weekday: 'short' 
+            };
+            document.getElementById('currentDate').textContent = 
+                new Date().toLocaleDateString('zh-CN', options);
+        }
+        
+        function showDailyEncouragement() {
+            const element = document.querySelector('.encouragement');
+            const shuffled = [...ENCOURAGEMENT_LIB].sort(() => Math.random() - 0.5);
+            element.textContent = shuffled[0];
+        }
+    </script>
+</body>
+
+</html>
